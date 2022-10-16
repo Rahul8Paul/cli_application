@@ -31,7 +31,6 @@ COPY . .
 RUN pip3 install dist/command_lib-${APP_VERSION}.tar.gz
 
 RUN adduser --system --uid 10000 --group --shell /sbin/nologin --home /opt/app app
-RUN adduser --system --uid 10001 --group --shell /sbin/nologin --home /opt/app app
-RUN chown -R 10000:10001 /opt/app
-USER 10000:10001
+RUN chown -R 10000 /opt/app
+USER 10000
 

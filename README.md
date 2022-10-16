@@ -27,10 +27,20 @@ run `poetry build` to create fresh wheel artefact
 
 Build the docker file under `db/mysql/Dockerfile`
 
-Start the mysql container `docker run --env-file=./db/mysql/.env -p 3306:3306 mysql:0.1`
+Start the mysql container `docker run --env-file=./db/mysql/.env -p 3306:3306 --network host mysql:0.1`
 
 Run the `load_data.py` under `db` to load the data. It should run inside the venv created. This will help to load the data into the mysql container. Place the `data.csv` inside the `db` dir. 
 
 Run the cli application by running `python cli.py demand daily 2010-12-01 2010-12-10 T-Shirt`. It should use the venv python
 
+Create the docker image for application container `docker build -f .\container\Dockerfile -t cli:0.1 .`
 
+Run the new container in interactive mode to see if it is working `docker run -it --network host cli:0.1 /bin/bash`
+
+Run `python3 cli.py demand daily 2010-12-08 2010-12-10 Shirt` inside the container to see the output.
+
+
+
+## Deployment
+
+This project can be deplyed in kubernetees. The CI pipeline can be built using jenkins. We can use trunc based git development strategy to add new features. 
