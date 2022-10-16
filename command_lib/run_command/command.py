@@ -84,6 +84,7 @@ class Command:
         return df
 
 
+
     def execute(self, query_name: str, granularity: str, start: date, end: date, category: str, conn_url: str, **kwargs):
         """entry method to run the cli functionality of the command class.
 
@@ -107,9 +108,39 @@ class Command:
             df_daily["date"] = dt.strftime("%Y-%m-%d")
             df = pd.concat([df, df_daily])
         print(df.head())
+        if "data_column" in kwargs:
+            print("daily popular item")
+            print(self._get_daily_popular_item(df, kwargs["data_column"]))
+            print("Country wise daily sale")
+            print(self._get_daily_country_wise(df, kwargs["data_column"]))
         
 
+    # daily popular item or item generating most revenue could be an interesting feature for data analysis
+    def _get_daily_popular_item(self, df: pd.DataFrame, data_column: str) -> pd.DataFrame:
+        """get daily max sale or revenue
 
-        
+        Args:
+            df (pd.DataFrame): op of the query
+            data_column (str): data column from the query output
+
+        Returns:
+            pd.DataFrame: return result in the form of pd dataframe
+        """
+        return df.sort_values(['date', data_column],ascending=(True,False))\
+            .groupby('date').head(5)
+
+
+    # country wise daily sale can give a view of the demand in each country and can help country wise forecasting
+    def _get_daily_country_wise(self, df:pd.DataFrame, data_column: str) -> pd.DataFrame:
+        """method to get daily coutry wise sale 
+
+        Args:
+            df (pd.DataFrame): op of the query
+            data_column (str): data column from the query output
+
+        Returns:
+            pd.DataFrame: return daily country wise sale in form of pandas df
+        """
+        return df.groupby(["Country", 'date'])[data_column].sum().reset_index()
         
 

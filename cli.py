@@ -8,5 +8,5 @@ if __name__ == "__main__":
     end_date = sys.argv[4]
     category = sys.argv[5]
     #TODO: conn_url can be taken from a secret file coming from password vault.
-    conn_url = "mysql+mysqlconnector://ecom_user:ecom_pass@localhost/ecom_db"
-    Command().execute(query_name=query_name, granularity=granularity, start= datetime.strptime(start_date, "%Y-%m-%d"), end= datetime.strptime(end_date, "%Y-%m-%d"), category=category, conn_url=conn_url)
+    conn_url = "mysql+mysqlconnector://ecom_user:ecom_pass@127.0.0.1/ecom_db"
+    Command().execute(query_name=query_name, granularity=granularity, start= datetime.strptime(start_date, "%Y-%m-%d"), end= datetime.strptime(end_date, "%Y-%m-%d"), category=category, conn_url=conn_url, data_column='total_sale_qty')
