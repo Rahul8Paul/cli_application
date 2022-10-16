@@ -1,0 +1,4 @@
+dataset_mapping:
+  mysql:
+    package: command_lib.dataset_io.mysql_io
+    class: MySqlIO

@@ -1,0 +1,3 @@
+query:
+  demand: select sum(Quantity), Description, Country from sales_table group by Description, Country
+  revenue: select sum(UnitPrice*Quantity), Description, Country from sales_table group by Description, Country
